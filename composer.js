@@ -163,13 +163,13 @@ result.on("close", function() {
   //  console.log("ffmpeg grid=", e.files.length);
     var filter = "";
     if (e.files.length == 1) {
-      filter = "-filter_complex \"" + drawText(e.files[0], "x=w/2-text_w/2","y=h-line_h-5");
+      filter = "-filter_complex \"[0]scale=640:-1[b];[b]" + drawText(e.files[0], "x=w/2-text_w/2","y=h-line_h-5");
     } else if (e.files.length == 2) {
       filter = "-filter_complex \"[0]scale=320:-1,pad=2*iw:2*ih:0:120[left];[1]scale=320:-1[right];[left][right]overlay=main_w/2:120,scale=640:480";
       filter += ","+drawText(e.files[0], "x=w/4-text_w/2","y=3*h/4-line_h-5");
       filter += ","+drawText(e.files[1], "x=3*w/4-text_w/2","y=3*h/4-line_h-5");
     } else if (e.files.length == 3 || e.files.length == 4) {
-      filter = "-filter_complex \"[0]pad=iw*2:ih*2[a];[a][1]overlay=w[b];[b][2]overlay=0:h[c];[c][3]overlay=w:h,scale=640:480";
+      filter = "-filter_complex \"[0]scale=320:-1[a];[1]scale=320:-1[b];[2]scale=320:-1[c];[3]scale=320:-1[d];[a]pad=640:480[x];[x][b]overlay=320[y];[y][c]overlay=0:240[z];[z][d]overlay=320:240";
       filter += ","+drawText(e.files[0], "x=w/4-text_w/2","y=h/2-line_h-5");
       filter += ","+drawText(e.files[1], "x=3*w/4-text_w/2","y=h/2-line_h-5");
       filter += ","+drawText(e.files[2], "x=w/4-text_w/2","y=h-line_h-5");

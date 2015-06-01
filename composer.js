@@ -148,9 +148,9 @@ result.on("close", function() {
     prev = i;
   }
 
-  var drawText = function(file, x, y) {
+  var drawText = function(file, x, y, prefix) {
     if (!file.name || file.name === "") return "";
-    return "drawtext=fontsize=30:fontcolor=white:fontfile=/Library/Fonts/Tahoma.ttf:text='" + file.name + "':"+x+":"+y;
+    return prefix + "drawtext=fontsize=30:fontcolor=white:fontfile=/Library/Fonts/Tahoma.ttf:text='" + file.name + "':"+x+":"+y;
   };
 
   //console.log(JSON.stringify(composer, null, 4));
@@ -163,18 +163,18 @@ result.on("close", function() {
   //  console.log("ffmpeg grid=", e.files.length);
     var filter = "";
     if (e.files.length == 1) {
-      filter = "-filter_complex \"[0]scale=640:-1[b];[b]" + drawText(e.files[0], "x=w/2-text_w/2","y=h-line_h-5");
+      filter = "-filter_complex \"[0]scale=640:-1" + drawText(e.files[0], "x=w/2-text_w/2","y=h-line_h-5", "[b];[b]");
     } else if (e.files.length == 2) {
       filter = "-filter_complex \"[0]scale=320:-1,pad=2*iw:2*ih:0:120[left];[1]scale=320:-1[right];[left][right]overlay=main_w/2:120,scale=640:480";
-      filter += ","+drawText(e.files[0], "x=w/4-text_w/2","y=3*h/4-line_h-5");
-      filter += ","+drawText(e.files[1], "x=3*w/4-text_w/2","y=3*h/4-line_h-5");
+      filter += drawText(e.files[0], "x=w/4-text_w/2","y=3*h/4-line_h-5", ",");
+      filter += drawText(e.files[1], "x=3*w/4-text_w/2","y=3*h/4-line_h-5", ",");
     } else if (e.files.length == 3 || e.files.length == 4) {
       filter = "-filter_complex \"[0]scale=320:-1[a];[1]scale=320:-1[b];[2]scale=320:-1[c];[3]scale=320:-1[d];[a]pad=640:480[x];[x][b]overlay=320[y];[y][c]overlay=0:240[z];[z][d]overlay=320:240";
-      filter += ","+drawText(e.files[0], "x=w/4-text_w/2","y=h/2-line_h-5");
-      filter += ","+drawText(e.files[1], "x=3*w/4-text_w/2","y=h/2-line_h-5");
-      filter += ","+drawText(e.files[2], "x=w/4-text_w/2","y=h-line_h-5");
+      filter += drawText(e.files[0], "x=w/4-text_w/2","y=h/2-line_h-5", ",");
+      filter += drawText(e.files[1], "x=3*w/4-text_w/2","y=h/2-line_h-5", ",");
+      filter += drawText(e.files[2], "x=w/4-text_w/2","y=h-line_h-5", ",");
       if (e.files.length == 4) {
-        filter += ","+drawText(e.files[3], "x=3*w/4-text_w/2","y=h-line_h-5");
+        filter += drawText(e.files[3], "x=3*w/4-text_w/2","y=h-line_h-5", ",");
       }
     }
     filter += "\" ";

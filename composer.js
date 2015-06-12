@@ -5,7 +5,6 @@ var fs = require('fs'),
     exec = require('child_process').execSync,
     fs = require('fs'),
     program = require('commander'),
-    zlib = require('zlib'),
     path = require('path'),
     unzip = require('unzip'),
     child;

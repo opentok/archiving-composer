@@ -176,7 +176,9 @@ result.on("close", function() {
         filter += drawText(e.files[3], "x=3*w/4-text_w/2","y=h-line_h-5", ",");
       }
     }
-    filter += "\" ";
+    if (filter.length !== 0) {
+      filter += "\" ";
+    }
     cmd = "ffmpeg -y -threads 4 -loglevel quiet ";
     var minDuration = 100000;
     for (var s in e.files) {

@@ -6,11 +6,34 @@ Sample apps for using ffmpeg to generate composed files from OpenTok individual 
 
 ## Installing
 
-You need to make sure you have installed ffmpeg with all of the dependencies. On OSX you do this with:
+You need to make sure you have installed
+* node.js v4+
+* ffmpeg with all of its dependencies.
+
+### OSX
 
 `brew install ffmpeg --with-fdk-aac --with-ffplay --with-freetype --with-libass --with-libquvi --with-libvorbis --with-libvpx --with-opus ----with-x264`
 
 Then checkout this repo and run `npm install`.
+
+### Ubuntu Linux 15.04+
+
+`sudo apt-get install nodejs npm ffmpeg`
+
+Then checkout this repo and run `npm install`.
+
+### Ubuntu Linux 14.04
+
+`sudo apt-get install nodejs npm`
+
+Then, to install ffmpeg:
+
+```
+  sudo add-apt-repository ppa:mc3man/trusty-media
+  sudo apt-get update
+  sudo apt-get dist-upgrade
+  sudo apt-get install ffmpeg
+```
 
 ## Usage
 

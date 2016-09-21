@@ -1,0 +1,10 @@
+name: Archiving Composer
+author: TokBox, Inc.
+website: https://tokbox.com
+tags:
+ - archiving
+ - sample
+description: Sample apps for using OpenTok archiving building blocks API and ffmpeg to generate composed files from individual archives.
+image: https://static.opentok.com/img/platform/header-icon-archiving@2x.png
+platforms:
+ - cloud

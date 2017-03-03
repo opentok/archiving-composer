@@ -1,8 +1,16 @@
-# archiving-composer
+# Individual stream archive processing tools
 
-Sample apps for using ffmpeg to generate composed files from OpenTok individual stream Archives.
+Sample apps for generating composed files from OpenTok individual stream Archives:
 
-[composer.js](composer.js) - This command-line script takes an archive.zip file as the input and outputs a composed file with the names of each individual displayed under them. It uses the connectionData of each participant as the name. You can provide the connectionData when you create a token for each participant. For more information have a look at the [opentok documentation](https://tokbox.com/opentok/libraries/client/js/reference/Connection.html).
+* [composer.js](composer.js) - This command-line script takes an archive.zip file as
+  the input and outputs a composed file with the names of each individual displayed 
+  under them. It uses the connectionData of each participant as the name. You can 
+  provide the connectionData when you create a token for each participant. For more
+  information have a look at the 
+  [opentok documentation](https://tokbox.com/opentok/libraries/client/js/reference/Connection.html).
+
+* [BARC](https://github.com/wobbals/barc) - A batch archive processor with support
+  for CSS-based layout management.
 
 ## Installing
 

@@ -155,6 +155,7 @@ result.on("close", function() {
   //console.log(JSON.stringify(composer, null, 4));
   var chunks = [];
   var cmd;
+  var strictCode;
   // now ready to rock
   for (var c in composer) {
     var e = composer[c];
@@ -180,13 +181,14 @@ result.on("close", function() {
       filter += "\" ";
     }
     cmd = "ffmpeg -y -threads 4 -loglevel quiet ";
+    strictCode = " -strict -2 ":
     var minDuration = 100000;
     for (var s in e.files) {
       var stream = e.files[s];
       var name = "name";
       var duration = (e.end - stream.offset)/1000;
       minDuration = minDuration < duration ? minDuration : duration;
-      cmd += util.format("-ss %d -t %d -i " + archive_path + "/%s.webm ", 
+      cmd += util.format("-ss %d -t %d -i " + archive_path + strictCode + "/%s.webm ", 
                           stream.offset/1000, 
                           (e.end - stream.offset)/1000, 
                           stream.streamId);
@@ -210,7 +212,8 @@ result.on("close", function() {
   fs.writeFileSync(archiveId + "-list.txt", content);
 
   // concat all chunks
-  cmd = "ffmpeg -y -threads 4 -loglevel quiet -f concat -i " + archiveId + "-list.txt -r 24 " + archiveId + "." + format;
+  strictCode = " -strict -2 ";
+  cmd = "ffmpeg -y -threads 4 -loglevel quiet -f concat -i " + archiveId + strictCode + "-list.txt -r 24 " + archiveId + "." + format;
   console.log(cmd);
   child = exec(cmd, function(error, stdout, stderr) {
     if (error !== null) {

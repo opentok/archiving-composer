@@ -1,6 +1,13 @@
 {
   "dependencies": {
+    "aws-sdk": "^2.658.0",
     "commander": "^2.8.1",
+<<<<<<< Updated upstream
     "unzip": "^0.1.11"
+=======
+    "ffmpeg": "0.0.4",
+    "node-fetch": "^2.6.0",
+    "unzip-stream": "^0.3.0"
+>>>>>>> Stashed changes
   }
 }

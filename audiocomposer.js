@@ -9,20 +9,6 @@ const name = interview
 var AWS = require('aws-sdk');
 // Create an S3 client
 var s3 = new AWS.S3({apiVersion: '2006-03-01'});
-var params = {Bucket: bucket, Key: zippedKey};
-tmp_file_name = './tmp/' + name + '/archive.zip'
-fs.mkdir('./tmp/' + name, { recursive: true }, (err) => {
-  if (err) throw err;
-});
-fs.writeFile(tmp_file_name, "Hello World!", function(err) {
-  if(err) {
-      return console.log(err);
-  }
-});
-
-var temp_dir = './tmp/' + name;
-
-
 
 var fs = require("fs"),
   exec = require("child_process").execSync,
@@ -34,24 +20,40 @@ var fs = require("fs"),
 
 const zippedKey = account + "/" + interview + "/archive.zip"
 const unzippedLocation = account + "/" + interview
+var params = {Bucket: bucket, Key: zippedKey};
+
+tmp_file_name = './tmp/' + name + '/archive.zip'
+fs.mkdir('./tmp/' + name, { recursive: true }, (err) => {
+  if (err) throw err;
+});
+// fs.writeFile(tmp_file_name, "Hello World!", function(err) {
+//   if(err) {
+//       return console.log(err);
+//   }
+// });
+
+var temp_dir = './tmp/' + name;
+
 
 var errHandler = function(err) {
   console.log(err);
 }
 
 async function downloadFile (params, tmp_file_name){
-  return new Promise((resolve, reject) => {
+  // return new Promise((resolve, reject) => {
     console.log("downloading file");
     var file = require('fs').createWriteStream(tmp_file_name);
-    resolve(await s3.getObject(params).createReadStream().pipe(file));
+    var dl = s3.getObject(params).createReadStream().pipe(file);
+    console.log(dl);
+    // return await 
     // resolve(result);
-  })
+  // })
 }
 
 async function unzipFile(tmp_file_name, unzip, temp_dir){
   return new Promise((resolve, reject) => {
     console.log("unzipping");
-    var unzipped = await fs.createReadStream(tmp_file_name).pipe(unzip.Extract({ path: temp_dir }))
+    var unzipped = fs.createReadStream(tmp_file_name).pipe(unzip.Extract({ path: temp_dir }))
     resolve(unzipped);
   })
 }
@@ -174,8 +176,8 @@ const uploadFile = async(filePath, bucketName, key) => {
 }
 
 async function main(){
-  await downloadFile(params, tmp_file_name);
+  // await downloadFile(params, tmp_file_name);
   await unzipFile(tmp_file_name, unzip, temp_dir);
-  await convert;
+  // await convert;
 }
 main()

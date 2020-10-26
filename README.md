@@ -10,6 +10,8 @@ archives](https://tokbox.com/developer/guides/archiving/#individual-stream-and-c
   information, have a look at the
   [OpenTok documentation](https://tokbox.com/developer/sdks/js/reference/Connection.html).
 
+  **NOTE:** Up to Node 12 supported.
+
 * [BARC](https://github.com/wobbals/barc) - A batch archive processor with support
   for CSS-based layout management.
 

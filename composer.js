@@ -6,7 +6,7 @@ var fs = require('fs'),
     fs = require('fs'),
     program = require('commander'),
     path = require('path'),
-    unzip = require('unzip'),
+    admZip = require('adm-zip'),
     child;
 
 program
@@ -26,10 +26,11 @@ var basename = path.basename(zip_file, ".zip");
 var temp_dir = path.join(dirname, basename);
 
 // Unzip the archive
-var input = fs.createReadStream(zip_file);
-var result = input.pipe(unzip.Extract({ path: temp_dir }));
+var zip = new admZip(program.input);
 
-result.on("close", function() {
+zip.extractAllTo(temp_dir.toString());
+
+function processFiles() {
   var files = fs.readdirSync(temp_dir);
 
   var json_file;
@@ -224,4 +225,6 @@ result.on("close", function() {
     console.log("Removing", chunk);
     fs.unlinkSync(chunk);
   });
-});
+}
+
+processFiles();
